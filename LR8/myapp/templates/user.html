@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ user.name }}</h2>
+
+{% if error %}
+    <p class="error">{{ error }}</p>
+{% endif %}
+
+{% if currencies %}
+    <h3>Подписки на валюты</h3>
+    <ul>
+        {% for c in currencies %}
+            <li>{{ c.char_code }} — {{ c.name }} ({{ c.value }} за {{ c.nominal }})</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Динамика курса (условные данные за 3 месяца)</h3>
+
+    {% for chart in charts %}
+        <h4>{{ chart.char }}</h4>
+        <canvas id="c{{ loop.index }}"></canvas>
+    {% endfor %}
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const chartData = {{ charts | tojson }};
+        chartData.forEach((item, index) => {
+            new Chart(document.getElementById("c" + (index + 1)), {
+                type: "line",
+                data: {
+                    labels: item.labels,
+                    datasets: [{
+                        label: item.char,
+                        data: item.values
+                    }]
+                }
+            });
+        });
+    </script>
+
+{% else %}
+    <p>Подписок на валюты нет или данные по курсам не получены.</p>
+{% endif %}
+
+{% endblock %}

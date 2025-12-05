@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Курсы валют</h2>
+
+{% if error %}
+    <p class="error">{{ error }}</p>
+{% endif %}
+
+{% if currencies %}
+<table>
+    <tr>
+        <th>Код</th>
+        <th>Название</th>
+        <th>Номинал</th>
+        <th>Курс</th>
+    </tr>
+    {% for c in currencies %}
+    <tr>
+        <td>{{ c.char_code }}</td>
+        <td>{{ c.name }}</td>
+        <td>{{ c.nominal }}</td>
+        <td>{{ c.value }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>Данные по валютам не получены.</p>
+{% endif %}
+
+{% endblock %}
