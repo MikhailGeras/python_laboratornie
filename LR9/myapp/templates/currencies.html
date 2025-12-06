@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Валюты</h1>
+
+<p>
+    Здесь показаны все записи из таблицы <code>currency</code>.
+    Можно удалить валюту, а также обновить курс вручную или через API ЦБ.
+</p>
+
+<h2>Обновить курсы через API ЦБ</h2>
+<form action="/currencies/refresh" method="get">
+    <div class="form-row">
+        <label for="codes">Коды (необязательно):</label>
+        <input type="text" id="codes" name="codes"
+               placeholder="Например: USD,EUR">
+    </div>
+    <input type="submit" value="Обновить курсы">
+</form>
+
+<h2>Обновить курсы вручную</h2>
+<p>Форма отправляет запрос вида
+   <code>/currency/update?USD=95.5&amp;EUR=100</code>.</p>
+<form action="/currency/update" method="get">
+    <div class="form-row">
+        <label for="usd">USD:</label>
+        <input type="text" id="usd" name="USD" placeholder="новый курс">
+    </div>
+    <div class="form-row">
+        <label for="eur">EUR:</label>
+        <input type="text" id="eur" name="EUR" placeholder="новый курс">
+    </div>
+    <input type="submit" value="Сохранить">
+</form>
+
+<h2>Список валют</h2>
+<table class="table table-striped">
+    <tr>
+        <th>ID</th>
+        <th>NumCode</th>
+        <th>CharCode</th>
+        <th>Name</th>
+        <th>Value</th>
+        <th>Nominal</th>
+        <th>Действия</th>
+    </tr>
+    {% for c in currencies %}
+        <tr>
+            <td>{{ c.id }}</td>
+            <td>{{ c.num_code }}</td>
+            <td>{{ c.char_code }}</td>
+            <td>{{ c.name }}</td>
+            <td>{{ "%.4f"|format(c.value) }}</td>
+            <td>{{ c.nominal }}</td>
+            <td>
+                <a href="/currency/delete?id={{ c.id }}">Удалить</a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}

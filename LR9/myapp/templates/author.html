@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Автор работы</h1>
+<p><strong>ФИО:</strong> {{ author.name }}</p>
+<p><strong>Группа:</strong> {{ author.group }}</p>
+
+<h2>Приложение</h2>
+<p><strong>Название:</strong> {{ app.name }}</p>
+<p><strong>Версия:</strong> {{ app.version }}</p>
+
+<p>Данное приложение реализует CRUD для валют на базе SQLite в памяти.</p>
+{% endblock %}

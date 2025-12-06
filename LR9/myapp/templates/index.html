@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ app.name }}</h1>
+<p>Версия {{ app.version }}. Автор: {{ author.name }}, группа {{ author.group }}.</p>
+
+<p>
+    Приложение показывает работу с SQLite в памяти, CRUD для валют и простую
+    архитектуру MVC.
+</p>
+
+<h2>Разделы</h2>
+<ul>
+    <li><a href="/users">Пользователи</a> — список пользователей и их валют.</li>
+    <li><a href="/currencies">Валюты</a> — таблица валют и обновление курсов.</li>
+</ul>
+
+<h2>Текущие валюты</h2>
+<table class="table table-striped">
+    <tr>
+        <th>ID</th><th>CharCode</th><th>Name</th><th>Value</th>
+    </tr>
+    {% for c in currencies %}
+        <tr>
+            <td>{{ c.id }}</td>
+            <td>{{ c.char_code }}</td>
+            <td>{{ c.name }}</td>
+            <td>{{ "%.4f"|format(c.value) }}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}

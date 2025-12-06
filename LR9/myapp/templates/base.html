@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>{{ app.name }} · {{ app.version }}</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="navbar">
+    <div class="navbar-brand">{{ app.name }}</div>
+    <nav class="navbar-links">
+        <a href="/">Главная</a>
+        <a href="/users">Пользователи</a>
+        <a href="/currencies">Валюты</a>
+        <a href="/author">Автор</a>
+    </nav>
+</header>
+
+<main class="page">
+    {% block content %}{% endblock %}
+</main>
+</body>
+</html>

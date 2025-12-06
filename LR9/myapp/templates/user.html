@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Пользователь: {{ user.name }} (ID {{ user.id }})</h1>
+
+<h2>Подписанные валюты (таблица user_currency)</h2>
+
+{% if currencies %}
+  <table class="table table-striped">
+    <tr>
+      <th>ID</th><th>CharCode</th><th>Name</th><th>Value</th><th>Nominal</th>
+    </tr>
+    {% for c in currencies %}
+      <tr>
+        <td>{{ c.id }}</td>
+        <td>{{ c.char_code }}</td>
+        <td>{{ c.name }}</td>
+        <td>{{ "%.4f"|format(c.value) }}</td>
+        <td>{{ c.nominal }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+{% else %}
+  <p>У пользователя нет подписок на валюты.</p>
+{% endif %}
+
+<p><a href="/users">← назад к списку пользователей</a></p>
+{% endblock %}
